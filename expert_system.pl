@@ -27,20 +27,20 @@ ask(Attribute, Value):-
   Answer = да.
 
 
-skill(speed) :- have(long_legs);
-                can(quickly_solve_problems);
+skill(speed) :- have(long_legs), !;
+                can(quickly_solve_problems), !;
                 like(sprint).
 
-skill(coordination) :- have(good_stretching);
-                       can(do_summersault);
+skill(coordination) :- have(good_stretching), !;
+                       can(do_summersault), !;
                       like(act_on_public).
 
-skill(endurance):- have(trained_heart);
-                   can(work_long_and_hard);
+skill(endurance):- have(trained_heart), !;
+                   can(work_long_and_hard), !;
                    like(marathon).
 
-skill(strength):- have(strong_arms);
-                  can(raise_weights);
+skill(strength):- have(strong_arms), !;
+                  can(raise_weights), !;
                   like(go_to_gym).
 
 category(cyclic_sport):- skill(endurance),
@@ -58,8 +58,10 @@ category(martial_art):- skill(coordination),
 category(sport_game):- skill(coordination),
                        skill(speed).
 
-sport_type(water):- like(water),
-                    place(indoor).
+sport_type(water_sport):- type(olympic, summer),
+                          like(water),
+                          place(indoor).
+
 sport_type(gymnastics):- category(coordinating_sport),
                          type(olympic, summer),
                          place(indoor).
@@ -79,12 +81,12 @@ type(olympic, winter):- status(olympic), season(winter).
 
 sport(figure_skating, "фигурное катание"):- category(coordinating_sport),
                                             type(olympic, winter),
-                                            place(indoor), like(artistry).
+                                            place(indoor),
+                                            like(artistry).
 
-sport(synchronous_swimming, "синхронное плавание"):- sport_type(water),
-                                                     category(coordinating_sport),
+sport(synchronous_swimming, "синхронное плавание"):- category(coordinating_sport),
+                                                     sport_type(water_sport),
                                                      gender(woman),
-                                                     type(olympic, summer),
                                                      like(artistry).
 
 sport(rhythmic_gymnastics, "художественная гимнастика"):-sport_type(gymnastics),
@@ -100,6 +102,7 @@ sport(cycle_racing, "велоспорт"):- category(cyclic_sport),
                                    place(outdoor).
 
 sport(biathlon, "биатлон"):- category(cyclic_sport),
+                             sport_type(skiing),
                              like(shooting).
 
 sport(skiing, "лыжные гонки"):- category(cyclic_sport),
@@ -111,8 +114,7 @@ sport(mountain_ski, "горные лыжи"):- category(coordinating_sport),
 
 
 sport(swimming, "плавание"):- category(cyclic_sport),
-                              sport_type(water),
-                              type(olympic, summer).
+                              sport_type(water_sport).
 
 sport(long_jumping, "прыжки в длину"):- category(speed_strength_sport),
                                         sport_type(athletics),
@@ -204,7 +206,7 @@ question(like, artistry, "Ты артистичен?").
 question(like, water, "Ты любишь воду?").
 question(like, physical_culture, "Ты любил заниматься физкультурой в школе?").
 question(like, jumping, "Ты любишь прыгать?").
-question(like, snow, "Ты любишь играть в снежки?").
+question(like, snow, "Ты любишь снег?").
 question(like, shooting, "Тебе нравится стрелять?").
 question(like, mountains, "Тебя вдохновляют горы?").
 question(like, work_in_team, "Ты любишь работать в команде?").
